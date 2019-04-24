@@ -3,8 +3,10 @@ package com.dimakaplin143.newcalc;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    final String LOG_TAG = "myLogs";
     private static final String APP_PREFERENCES = "bgImg";
     public static final String APP_PREFERENCES_NAME = "imgName";
     private SharedPreferences bgSettings;
@@ -53,14 +56,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        checkImg();
 
     }
 
     private void checkImg() {
         String fileName = bgSettings.getString(APP_PREFERENCES_NAME, "");
+        Log.e(LOG_TAG, fileName);
         if (!"".equals(fileName)) {
             File file = storage.getPrivateDocStorageDir(fileName);
-            img.setImageURI(Uri.fromFile(file));
+/*            img.setImageURI(null);
+            Log.e(LOG_TAG, Uri.fromFile(file).toString());
+            img.setImageURI(Uri.fromFile(file));*/
+            img.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
         }
     }
 

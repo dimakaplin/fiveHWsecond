@@ -17,6 +17,7 @@ public class ChangeBg extends AppCompatActivity {
 
     private static final String APP_PREFERENCES = "bgImg";
     public static final String APP_PREFERENCES_NAME = "imgName";
+    final String LOG_TAG = "myLogs";
     private SharedPreferences bgSettings;
 
     private Storage storage;
