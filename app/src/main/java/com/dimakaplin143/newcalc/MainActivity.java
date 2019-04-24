@@ -1,11 +1,27 @@
 package com.dimakaplin143.newcalc;
 
-import android.support.v7.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final String APP_PREFERENCES = "bgImg";
+    public static final String APP_PREFERENCES_NAME = "imgName";
+    private SharedPreferences bgSettings;
+
+    private Storage storage;
+    private ImageView img;
+    Button im;
 
     Button b1;
     Button b2;
@@ -40,7 +56,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void checkImg() {
+        String fileName = bgSettings.getString(APP_PREFERENCES_NAME, "");
+        if (!"".equals(fileName)) {
+            File file = storage.getPrivateDocStorageDir(fileName);
+            img.setImageURI(Uri.fromFile(file));
+        }
+    }
+
     private void initViews() {
+
+        img = findViewById(R.id.img);
+        storage = new Storage();
+        bgSettings = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        im = findViewById(R.id.image_btn);
+
+        im.setOnClickListener(v->{
+            Intent intent = new Intent(MainActivity.this, ChangeBg.class);
+            startActivity(intent);
+        });
+
         b1 = findViewById(R.id.b1);
         b2 = findViewById(R.id.b2);
         b3 = findViewById(R.id.b3);
@@ -118,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                         result.setText(Double.toString(res));
                         break;
                     case "*":
-                        res = ((Double.parseDouble(first) * 10000) * (Double.parseDouble(two) * 10000)) / 10000;
+                        res = ((Double.parseDouble(first) * 10000) * (Double.parseDouble(two) * 10000)) / 100000000;
                         result.setText(Double.toString(res));
                         break;
                     case "-":
@@ -128,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                         result.setText(Double.toString(res));
                         break;
                     case "+":
-                        res = (Double.parseDouble(first) * 10000 - Double.parseDouble(two)* 10000) / 10000;
+                        res = (Double.parseDouble(first) * 10000 + Double.parseDouble(two)* 10000) / 10000;
                         result.setText(Double.toString(res));
                         break;
                     case "%":

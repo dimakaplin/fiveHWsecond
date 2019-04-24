@@ -21,4 +21,11 @@
     <string name="prec">%</string>
     <string name="res">=</string>
     <string name="clear">C</string>
+    <string name="image">IM</string>
+    <string name="ok">OK</string>
+    <string name="hint">enter img path</string>
+    <string name="save_message">img saved</string>
+    <string name="not_saved_message">img does not exist</string>
+
+
 </resources>
